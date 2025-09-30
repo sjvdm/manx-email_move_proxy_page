@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Manx.net – A New Chapter for Manx.net Email</title>
+
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      // Tailwind config: enable arbitrary values & larger base font scale if needed.
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontSize: {
+              // Slightly larger defaults for readability
+              base: '1.1rem',
+              lg: '1.35rem',
+              xl: '1.7rem',
+              '2xl': '2.2rem',
+            },
+            borderRadius: {
+              xl: '1rem',
+              '2xl': '1.25rem',
+            },
+            boxShadow: {
+              soft: '0 6px 20px rgba(0,0,0,0.06)'
+            }
+          }
+        }
+      }
+    </script>
+     
+<!-- Chat Widget Start -->
+    <script>
+    function openChatbotWidget() {
+      const widget = document.getElementById('chatbotWidget');
+      const iframe = document.getElementById('chatbotIframe');
+      
+      // Load the chatbot iframe when widget opens
+      if (!iframe.src) {
+        iframe.src = "https://chatbot.manx.net/c3a93c62-d9ae-4b91-9a29-cbb58635e399/verified";
+      }
+      
+      widget.classList.remove('hidden');
+    }
+    
+    function closeChatbotWidget() {
+      const widget = document.getElementById('chatbotWidget');
+      widget.classList.add('hidden');
+    }
+    
+    // Close widget with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeChatbotWidget();
+      }
+    });
+    
+    // Handle iframe load events
+    function handleIframeLoad() {
+      const loading = document.getElementById('chatbotLoading');
+      if (loading) {
+        loading.style.display = 'none';
+      }
+    }
+    
+    function handleIframeError() {
+      const loading = document.getElementById('chatbotLoading');
+      if (loading) {
+        loading.innerHTML = '<div class="text-center text-red-600 p-4"><p>Unable to load chat. Please try again later.</p><button onclick="closeChatbotWidget()" class="mt-2 px-4 py-2 bg-[var(--brand-green)] text-white rounded hover:opacity-90">Close</button></div>';
+      }
+    }
+  </script>
+<!-- Chat Widget End -->
+
+    <style>
+      /* Brand colours — replace with exact Manx.net values if different */
+      :root {
+        --brand-green: #00A651; /* Manx.net green (placeholder — update if needed) */
+        --brand-blue:  #003C71; /* Manx/Manx Telecom blue family (placeholder) */
+        /* Copy column list styles (scoped to the left column) */
+.md\:col-span-7 ul,
+.md\:col-span-7 ol {
+  margin: 1.25rem 0;         /* mt-5 / mb-5 */
+  padding-left: 1.25rem;     /* pl-5 */
+  font-size: 1.125rem;       /* text-lg */
+  line-height: 1.625;        /* leading-relaxed */
+  color: rgb(64 64 64);      /* neutral-700 to match your <p> */
+  list-style-position: outside;
+}
+
+@media (min-width: 640px) {
+  .md\:col-span-7 ul,
+  .md\:col-span-7 ol {
+    font-size: 1.25rem;      /* sm:text-xl */
+  }
+}
+
+.md\:col-span-7 ul { list-style-type: disc; }
+.md\:col-span-7 ol { list-style-type: decimal; }
+
+/* Comfortable spacing between items */
+.md\:col-span-7 li + li { margin-top: 0.5rem; }
+
+/* Brand-colour markers */
+.md\:col-span-7 li::marker { color: var(--brand-green); }
+
+/* Nested lists: slightly tighter */
+.md\:col-span-7 ul ul,
+.md\:col-span-7 ol ul,
+.md\:col-span-7 ul ol,
+.md\:col-span-7 ol ol {
+  margin: 0.5rem 0;
+  padding-left: 1rem;
+  font-size: 1em;            /* inherit from parent list */
+  line-height: 1.625;
+}
+
+/* Chat Widget Styles - HubSpot Style */
+#chatbotWidget {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 10000;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#chatbotWidget.hidden {
+  transform: translateY(100px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#chatbotContainer {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  width: 380px;
+  height: 600px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  animation: widgetSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes widgetSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+#chatbotIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 1rem;
+}
+
+#chatbotClose {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 10001;
+  background: rgba(0, 0, 0, 0.1);
+  color: #666;
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.125rem;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+#chatbotClose:hover {
+  background: rgba(0, 0, 0, 0.2);
+  color: #333;
+  transform: scale(1.1);
+}
+
+#chatbotLoading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  #chatbotWidget {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+  }
+  
+  #chatbotContainer {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  #chatbotIframe {
+    border-radius: 0;
+  }
+  
+  #chatbotClose {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+    </style>
+  </head>
+  <body class="antialiased bg-white text-neutral-900">
+    <!-- Top Bar / Branding -->
+    <header class="bg-[var(--brand-green)] text-white">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between py-4 gap-4">
+          <!-- Simple wordmark placeholder (swap for real SVG/logo) -->
+          <a href="#" class="inline-flex items-center gap-3" aria-label="Manx.net home">
+          <img src="m_logo.png"></a>
+            
+         
+
+          <!-- Optional top‑bar action (can be removed) -->
+          <nav class="hidden md:flex items-center gap-6 text-white/90">
+            <a href="#" class="hover:text-white focus:outline-none focus:ring-2 focus:ring-white/60 rounded px-1">Support</a>
+            <a href="#" class="hover:text-white focus:outline-none focus:ring-2 focus:ring-white/60 rounded px-1">Login</a>
+          </nav>
+        </div>
+      </div>
+      <div class="h-1 w-full bg-[var(--brand-blue)]"></div>
+    </header>
+
+           <!-- Main -->
+    <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <!-- Page shell for breathing room -->
+      <section class="py-10 sm:py-14">
+        <!-- 70/30 layout: stacks on mobile, 2 cols on md+ -->
+        <div class="grid grid-cols-1 md:grid-cols-10 gap-8 lg:gap-12">
+          <!-- Left: Copy only (70%) -->
+          <div class="md:col-span-7">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-neutral-900">
+              A New Chapter for Manx.net Email.
+            </h1>
+            <p>&nbsp</p>
+            <h3 class="text-lg sm:text-xl font-bold leading-tight tracking-tight text-neutral-900">From 30th September 2025, the Manx.net email service will be moving to Junara, a specialist email provider who will take full ownership and management of the service.</h2>
+            <p>&nbsp</p>
+			<h2 class="text-xl sm:text-2xl font-bold leading-tight tracking-tight text-neutral-900">What’s Changing?</h2>
+			<p class="mt-5 text-lg sm:text-xl leading-relaxed text-neutral-700">
+              <ul>
+              	<li>For over 20 years, Manx Telecom has provided @manx.net email addresses free of charge to the Isle of Man community.</li>
+				<li>From 30th September 2025, Junara will take over full ownership and customer support for the Manx.net email service.</li>
+				<li>This ensures uninterrupted service, managed by an email specialist with robust security and infrastructure.</li>
+			</ul>
+            </p>
+            <p>&nbsp</p>
+            <h2 class="text-xl sm:text-2xl font-bold leading-tight tracking-tight text-neutral-900">What You Need to Do?</h2>
+            <p class="mt-5 text-lg sm:text-xl leading-relaxed text-neutral-700">
+               <ul>
+              	<li>To keep your @manx.net email address, you must register directly with Junara between 30th September and 4th November 2025.</li>
+              	<li>Existing users will receive an exclusive £14 discount – the first year will cost just £65.</li>
+              	<li>If you do not register by 4th November 2025, your account will be suspended from 5th November 2025.</li>
+              	<li>A grace period until 23rd February 2026 allows reactivation if you miss the deadline.</li>
+              	</ul>
+            </p>
+          </div>
+
+          <!-- Right: CTAs (30%) -->
+          <aside class="md:col-span-3">
+            <div class="md:sticky md:top-8">
+              <div class="rounded-2xl border border-neutral-200 p-6 shadow-soft bg-white">
+              
+                <h2 class="text-xl font-semibold mb-4">Get started</h2>
+                <div class="flex flex-col gap-3">
+                <a href="#" class="inline-flex items-center gap-3" aria-label="Junara">
+          <img src="Junara_Logo.svg"></a></br>
+                
+                  <!-- Login Button -->
+                  <a
+                    href="#"
+                    class="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-soft bg-[var(--brand-green)] text-white hover:opacity-90 focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--brand-green)]/40 active:opacity-100 transition"
+                    aria-label="Log in to Manx.net"
+                  >
+                    Keep my email
+                  </a>
+
+                  <!-- Learn More Button (outlined, brand green) -->
+                  <a
+                    href="#"
+                    class="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold border-2 border-[var(--brand-green)] text-[var(--brand-green)] hover:bg-[var(--brand-green)]/5 focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--brand-green)]/30 transition"
+                    aria-label="Learn more about Manx.net"
+                  >
+                    Learn more
+                  </a>
+                </div>
+
+                <!-- Small reassurance copy -->
+                <p class="mt-4 text-sm text-neutral-500">
+                  Action required: To keep your email account active you need to visit Junara and sign up before 14th November 2025.
+                </p>
+              </div>
+              <!-- Chat button -->
+<button 
+  onclick="openChatbotWidget()" 
+  class="group fixed bottom-6 right-6 z-[9999] w-16 h-16 flex items-center justify-center rounded-full bg-[var(--brand-green)] text-white shadow-lg hover:bg-[var(--brand-blue)] transition"
+>
+  <!-- Icon -->
+  <span class="text-3xl">💬</span>
+  
+  <!-- Tooltip -->
+  <span class="absolute right-20 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-sm px-3 py-1 rounded shadow transition">
+    Chat about Manx.net
+  </span>
+</button>
+
+            </div>
+            
+          </aside>
+          
+        </div>
+        
+      </section>
+      
+    </main>
+
+    <!-- Footer (minimal) -->
+    <footer class="border-t border-neutral-200">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 text-sm text-neutral-500">
+        © <span id="year"></span> Manx.net — All rights reserved.
+      </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div id="chatbotWidget" class="hidden">
+      <div id="chatbotContainer">
+        <button id="chatbotClose" onclick="closeChatbotWidget()" aria-label="Close chat">
+          ×
+        </button>
+        <div id="chatbotLoading" class="flex items-center justify-center h-full bg-gray-50">
+          <div class="text-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-green)] mx-auto mb-2"></div>
+            <p class="text-gray-600">Loading chat...</p>
+          </div>
+        </div>
+        <iframe 
+          id="chatbotIframe" 
+          title="Manx.net Chatbot"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          referrerpolicy="no-referrer-when-downgrade"
+          onload="handleIframeLoad()"
+          onerror="handleIframeError()"
+        ></iframe>
+      </div>
+    </div>
+
+    <script>
+      // Update footer year
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
